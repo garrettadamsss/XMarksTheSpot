@@ -2,19 +2,31 @@
  <html>
    <head>
       <title>X Marks The Spot</title>
+
+      <!--Style sheets-->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
       <link rel="stylesheet" href="styles.css">  
+
+      <!--Google Fonts-->
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     </head>
 
    <body>
-      <h1>Hi, Welcome to XMarksTheSpot</h1>
 
-      <form action="uploadimage">
-          <input type="file" id="myFile" name="filename">
-          <input type="submit">
-      </form>
+      <header>
+        <h3>XMarksTheSpot</h2>
+        <ul class="nav_links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#">Favorites</a></li>
+          <li><a href="location.html">Add Location</a></li>
+        </ul>
+      </header>
 
+
+      <!--Search Bar-->
+      
       <!--The div element for the map -->
-      <h3>My Google Maps</h3>
       <div id="map"></div>
 
       <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
