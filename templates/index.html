@@ -2,12 +2,37 @@
  <html>
    <head>
       <title>Penny.com</title>
+      <style>
+        #map {
+          height: 600px;
+          width: 80%;
+        }
+      </style>
       </head>
    <body>
-    Hi, Welcome to XMarksTheSpot
-    <form action="uploadimage">
-        <input type="file" id="myFile" name="filename">
-        <input type="submit">
+      <h1>Hi, Welcome to XMarksTheSpot</h1>
+      <form action="uploadimage">
+          <input type="file" id="myFile" name="filename">
+          <input type="submit">
       </form>
-   </body>
+      <h3>My Google Maps</h3>
+      <!--The div element for the map -->
+      <div id="map"></div>
+      <script>
+        function initMap(){
+          var options = {
+            zoom:12,
+            center:{lat:33.7743,lng:-117.9380}
+          }
+
+          var map = new google.maps.Map(document.getElementById('map'),options);
+        }
+      </script>
+
+      <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+      <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNtsZQuoluir3fEw-mwXZpn-1pLQLPNUc&callback=initMap&libraries=&v=weekly"
+        async
+      ></script>
+    </body>
  </html>
