@@ -24,3 +24,17 @@ function initMap(){
         detail.open(map, marker);
     })
   }
+
+
+  
+  function initAutocomplete(){
+
+    const aOptions = {
+        bounds: defaultBounds,
+        componentRestrictions: { country: "us" },
+        fields: ["address_components", "geometry", "icon", "name"],
+        types: ["geocodet"],
+      };
+
+      const autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'),aOptions);
+  }
