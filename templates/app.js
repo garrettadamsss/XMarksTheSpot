@@ -8,6 +8,23 @@ function initMap(){
 
     var map = new google.maps.Map(document.getElementById('map'),options);
 
+    // Search Autocomplete
+    
+    const autocomplete = new google.maps.places.Autocomplete(document.getElementById('search_bar'));
+    autocomplete.addListener('place_changed', onPlaceChanged);
+
+
+    // idk if we need this -> optional argument in autocomplete object 
+
+    // const aOptions = {
+    //     bounds: defaultBounds,
+    //     componentRestrictions: { country: "us" },
+    //     fields: ["place_id", "geometry", "name"],
+    //     types: ["geocode"],
+    //   };
+
+
+
     // Marker
     const marker = new google.maps.Marker({
         position: {lat:33.7743,lng:-117.9380},
@@ -25,16 +42,15 @@ function initMap(){
     })
   }
 
+  // erm not sure what this does
+  function onPlaceChanged(){
+      var place = autocomplete.getPlace();
 
-  
-  function initAutocomplete(){
-
-    const aOptions = {
-        bounds: defaultBounds,
-        componentRestrictions: { country: "us" },
-        fields: ["address_components", "geometry", "icon", "name"],
-        types: ["geocodet"],
-      };
-
-      const autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'),aOptions);
+      if(!place.geometry){
+          document.getElementById('autocomplete').placeholder = 'Enter a place';
+      }
+      else {
+          document.getElementById('details').innerHTML = place.name;
+      }
   }
+  
