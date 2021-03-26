@@ -15,7 +15,6 @@ def index():
     html = render_template('index.html')
     response = make_response(html)
     return response
-    
 
 # endpoint to upload image file to an image folder in our app
 # doesn't work yet
