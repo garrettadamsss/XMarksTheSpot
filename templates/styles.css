@@ -1,7 +1,6 @@
 #map {
-  height: 800px;
+  height: 50em;
   width: 100%;
-
   margin-top: 20px;
 }
 
@@ -42,4 +41,29 @@ input {
   left: 318px;
   font-size: 35px;
   cursor: pointer;
+}
+
+.map_wrapper {
+  display: flex;
+}
+
+.descrip_modal {
+  position: absolute;
+  top: 10;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 50px;
+}
+
+.descrip_contents {
+  background-color: rgb(201, 205, 207);
+  padding: 2rem 4rem;
+  border-radius: 20px;
+}
+
+.descrip_modal--hidden {
+  display: none;
 }

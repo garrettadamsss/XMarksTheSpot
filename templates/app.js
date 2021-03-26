@@ -1,3 +1,5 @@
+let marker;
+
 function initMap(){
 
     // Map Center
@@ -9,7 +11,7 @@ function initMap(){
     var map = new google.maps.Map(document.getElementById('map'),options);
 
     // Search Autocomplete
-    
+
     const autocomplete = new google.maps.places.Autocomplete(document.getElementById('search_bar'));
     autocomplete.addListener('place_changed', onPlaceChanged);
 
@@ -23,10 +25,8 @@ function initMap(){
     //     types: ["geocode"],
     //   };
 
-
-
     // Marker
-    const marker = new google.maps.Marker({
+    marker = new google.maps.Marker({
         position: {lat:33.7743,lng:-117.9380},
         map: map
         // icon : "img"
@@ -53,4 +53,12 @@ function initMap(){
           document.getElementById('details').innerHTML = place.name;
       }
   }
+
+
+//   const toggleMarkerDescrip = () => {
+//       document.querySelector('.descrip_modal')
+//         .classList.toggle('descrip_modal--hidden');
+//   };
+
+//   document.querySelector()
   
