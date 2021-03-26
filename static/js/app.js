@@ -53,4 +53,6 @@ function initMap(){
           document.getElementById('details').innerHTML = place.name;
       }
   }
+
+  
   
