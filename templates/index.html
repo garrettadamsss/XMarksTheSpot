@@ -5,7 +5,7 @@
 
       <!--Style sheets-->
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
-      <link rel="stylesheet" href="styles.css">  
+      <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"/> 
 
       <!--Google Fonts-->
       <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -67,6 +67,8 @@
         async>
     </script>
 
-      <script src="app.js"></script>
+      <!-- <script src="app.js"></script> -->
+
+      <script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
     </body>
  </html>

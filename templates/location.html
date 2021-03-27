@@ -4,7 +4,7 @@
         <title>Add Location</title>
 
         <!--Style sheets-->
-        <link rel="stylesheet" href="styles.css"> 
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"/>
        
        
 
@@ -37,6 +37,6 @@
               </form>
             </div>
         </div>
-        <script src="app.js"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
     </body>
 </html>
