@@ -18,21 +18,34 @@
         <h3 class="logo">XMarksTheSpot</h2>
         <ul class="nav_links">
           <li><a href="{{url_for('index')}}">Home</a></li>
-          <li><a href="{{url_for('location')}}">Add Location</a></li>
           <li><a href="#">About Us</a></li>
         </ul>
       </header>
 
+
+      <button id="modalBtn" class="button">Add Location</button>
+
+      <div id="locationModal" class="modal">
+        <div class="modal-content">
+          <span class="closeBtn">&times;</span>
+          <form action="uploadimage">
+            <input type="file" id="myFile" name="filename">
+            <input id= "search_bar" placeholder="Enter the location" type="text" class="controls"/>
+            <input id= "loc_descrip" placeholder="Location description"type ="text"/>
+            <input type="submit"> 
+          </form>
+        </div>
+    </div>
+
       
 
       <!--Search Bar-->
-
+<!-- 
       <div class="wrap">
         <div class="search">
-           <input id="search_bar" placeholder="Enter a location" type="text"/>
-           <div class="close-btn">&times;</div>
+           <input id="search_bar" placeholder="Enter a location" type="text" class="controls"/>
         </div>
-     </div>
+     </div> -->
 
      
       <div class="map_wrapper">
@@ -57,17 +70,20 @@
 
 
       
-      <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+      <script src="{{ url_for('static', filename='app.js') }}"></script>
+
 
       <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
       <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNtsZQuoluir3fEw-mwXZpn-1pLQLPNUc&callback=initMap&libraries=&v=weekly"
         async></script>
 
-       <script
+        <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSfCU3uVlbkm5WDRXPEXwTjm9PUF2cgIw&libraries=places&callback=initMap"
         async>
     </script> 
+
+       
 
       <!-- <script src="app.js"></script> -->
 
