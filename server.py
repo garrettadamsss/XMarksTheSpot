@@ -19,6 +19,13 @@ def index():
     response = make_response(html)
     return response
 
+
+@app.route('/location')
+def location():
+    html = render_template('location.html')
+    resp = make_response(html)
+    return resp
+
 # endpoint to upload image file to an image folder in our app
 # doesn't work yet
 # @app.route('/uploadimage', methods=['POST'])
