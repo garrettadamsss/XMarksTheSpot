@@ -36,5 +36,9 @@ class Entry:
 
     def returnPlaceLocationTuple(self):
         return (self.placename, self.location)
+
+if __name__ == '__main__':
+    entry = Entry(location='10201 Malinda Ln, Garden Grove CA, 92840')
+    print(entry.coordinates())
         
         

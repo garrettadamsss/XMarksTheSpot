@@ -10,6 +10,7 @@ from sys import stderr
 from os import path
 from entry import Entry
 import sqlite3
+import json
 
 #-----------------------------------------------------------------------
 
@@ -30,12 +31,14 @@ class Database:
         try:
             cursor = self._connection.cursor()
 
+            latitude, longitude = entry.coordinates()
 
-            values = (entry.placename, entry.location, entry.description)
+
+            values = (entry.placename, entry.location, entry.description, entry.image, latitude, longitude)
 
 
-            QUERY_STRING = ''' INSERT INTO entries(placename,location,description)
-              VALUES(?,?,?) '''
+            QUERY_STRING = ''' INSERT INTO entries(placename,location,description, imageLocation, latitude, longitude)
+              VALUES(?,?,?,?,?,?) '''
             cursor.execute(QUERY_STRING, (values))   
             self._connection.commit()              
             return cursor.lastrowid
@@ -44,6 +47,8 @@ class Database:
 
     # searchEntry returns all rows, fields that contain nameQuery or locQuery (name or location)
     # returns list of Entry objects
+
+    # we probably don't need this method actually
     def searchEntry(self, nameQuery='', locQuery=''):
 
         cursor = self._connection.cursor()
@@ -77,6 +82,52 @@ class Database:
         return list(entries)
 
 
+    # takes all entries in the database and returns a json object that you can send to the frontend
+    # each element in this json list is an entry with fields placename, location, description, imagelocation, latitude, longitude
+    def allEntries(self):
+        cursor = self._connection.cursor()
+
+        QUERY_STRING = """ SELECT placename, location, description, imagelocation, latitude, longitude from entries
+                """
+        cursor.execute(QUERY_STRING)
+
+        row = cursor.fetchone()
+        entries = []
+        while row is not None:
+            entry = {}
+            entry['placename'] = row[0]
+            entry['location'] = row[1]
+            entry['description'] = row[2]
+            entry['imagelocation'] = row[3]
+            entry['latitude'] = row[4]
+            entry['longitude'] = row[5]
+            entries.append(entry)
+            row = cursor.fetchone()
+
+        return json.dumps(entries)
+
+    
+    # only use this if you need to change the table
+    def changeTable(self):
+        try:
+            cursor = self._connection.cursor()
+
+
+            QUERY_STRING = ''' DELETE FROM entries'''
+            cursor.execute(QUERY_STRING)   
+            self._connection.commit()              
+            return
+        except Exception as e:
+            print(e)
+
+
+
+
+
+
+
+
+
 
 
 
@@ -98,14 +149,15 @@ def createTable():
                                     ); """)
 
 
-
-
     # Save (commit) the changes
     con.commit()
 
     # We can also close the connection if we are done with it.
     # Just be sure any changes have been committed or they will be lost.
     con.close()
+
+
+
 
 
 def main():
@@ -115,8 +167,7 @@ def main():
 
     database = Database()
     database.connect()
-    for ele in database.searchEntry(nameQuery='ho'):
-        print(ele)
+    print(database.allEntries())
     database.disconnect()
 
 #-----------------------------------------------------------------------

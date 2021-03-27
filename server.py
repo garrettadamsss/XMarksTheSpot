@@ -5,11 +5,24 @@ import requests
 import os
 from entry import Entry
 from database import Database
-# from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
+import uuid
+
+
+
 
 
 
 app = Flask(__name__, template_folder='templates')
+
+
+# only allow .jpg, .png, .gif
+app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif']
+app.config['UPLOAD_PATH'] = 'static/images'
+
+
+
+
 
 
 @app.route('/', methods=['GET'])
@@ -26,15 +39,6 @@ def location():
     resp = make_response(html)
     return resp
 
-# endpoint to upload image file to an image folder in our app
-# doesn't work yet
-# @app.route('/uploadimage', methods=['POST'])
-# def uploadImage():
-#     if request.method == 'POST':
-#         f = request.files['file']   
-#         # need to put as environment variable
-#         f.save(os.path.join('/images', secure_filename(f.filename)))
-#         return
 
 
 # adds user entry into database
@@ -42,17 +46,46 @@ def location():
 def addEntry():
 
 
-    placename = request.args.get('placeName')
-    description = request.args.get('description')
-    location = request.args.get('location')
+    placename = request.form.get('placename')
+    description = request.form.get('description')
+    location = request.form.get('location')
 
-    # still need to write something that can process and handle images
 
-    entry = Entry(placename=placename, description=description, location=location)
+
+
+    # # get and process image file
+
+
+
+    uploaded_file = request.files['file']
+
+    filename = secure_filename(uploaded_file.filename)
+
+    
+    print(filename)
+    if filename != '':
+        file_ext = os.path.splitext(filename)[1]
+        if file_ext not in app.config['UPLOAD_EXTENSIONS']:
+            print('Invalid image extension')
+            exit(400)
+
+        # generate random filename in case users submit the same filename
+        filename = str(uuid.uuid4().int) + file_ext
+        print(filename)
+        uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
+    else:
+        print('No image file found')
+
+    
+    # imagepath should be static/images/FILE_NAME.file_ext (e.g. png or jpg)
+    imagepath = app.config['UPLOAD_PATH'] + '/' + filename
+    entry = Entry(placename=placename, description=description, location=location, image=imagepath)
 
     database = Database()
 
+    database.connect()
     database.insertEntry(entry)
+    database.disconnect()
 
     html = render_template('index.html')
     response = make_response(html)

@@ -28,10 +28,11 @@
       <div id="locationModal" class="modal">
         <div class="modal-content">
           <span class="closeBtn">&times;</span>
-          <form action="uploadimage">
-            <input type="file" id="myFile" name="filename">
-            <input id= "search_bar" placeholder="Enter the location" type="text" class="controls"/>
-            <input id= "loc_descrip" placeholder="Location description"type ="text"/>
+          <form action="/addEntry" method="POST" enctype="multipart/form-data">
+            <input type="file" id="myFile" name="file">
+            <input id= "placename" name="placename" placeholder="Enter the name of the place" type="text"/>
+            <input id= "search_bar" name="location" placeholder="Enter the location" type="text" class="controls"/>
+            <input id= "loc_descrip" name="description" placeholder="Location description"type ="text"/>
             <input type="submit"> 
           </form>
         </div>
