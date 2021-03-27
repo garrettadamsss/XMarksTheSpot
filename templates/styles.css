@@ -21,6 +21,9 @@ header {
   padding: 0px 20px;
   margin-top: 10px;
 }
+.nav_links>li>a{
+  color: #000000;
+}
 
 .wrap {
   margin-top: 50px;
