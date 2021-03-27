@@ -1,7 +1,10 @@
 from sys import argv
 from flask import Flask, request, make_response, redirect, url_for
 from flask import render_template
+import requests
 import os
+from entry import Entry
+from database import Database
 # from werkzeug import secure_filename
 
 
@@ -25,6 +28,34 @@ def index():
 #         # need to put as environment variable
 #         f.save(os.path.join('/images', secure_filename(f.filename)))
 #         return
+
+
+# adds user entry into database
+@app.route('/addEntry', methods=['POST'])
+def addEntry():
+
+
+    placename = request.args.get('placeName')
+    description = request.args.get('description')
+    location = request.args.get('location')
+
+    # still need to write something that can process and handle images
+
+    entry = Entry(placename=placename, description=description, location=location)
+
+    database = Database()
+
+    database.insertEntry(entry)
+
+    html = render_template('index.html')
+    response = make_response(html)
+    return response
+
+
+
+
+
+
 
 if __name__ == '__main__':
     # if len(argv) != 2:
