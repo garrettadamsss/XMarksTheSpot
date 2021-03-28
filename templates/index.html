@@ -38,6 +38,8 @@
         </div>
     </div>
 
+
+
       
 
       <!--Search Bar-->
@@ -72,6 +74,17 @@
 
       
       <script src="{{ url_for('static', filename='app.js') }}"></script>
+
+      <script >
+
+        // this is a list of json objects, where each object has the same fields as what u see in database.py,
+        // like latitude, longitude, description, image location, etc. maybe define a function app.js and call
+        // it with data
+
+          var data= {{ entries |tojson }};
+          data = JSON.parse(data);
+          console.log(data);
+      </script>
 
 
       <!-- Async script executes immediately and must be after any DOM elements used in callback. -->

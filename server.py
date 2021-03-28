@@ -9,10 +9,6 @@ from werkzeug.utils import secure_filename
 import uuid
 
 
-
-
-
-
 app = Flask(__name__, template_folder='templates')
 
 
@@ -21,14 +17,18 @@ app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png', '.gif']
 app.config['UPLOAD_PATH'] = 'static/images'
 
 
-
-
-
-
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
 def index():    
-    html = render_template('index.html')
+
+    database = Database()
+
+    database.connect()
+    entries = database.allEntries()
+    database.disconnect()
+
+
+    html = render_template('index.html', entries=entries)
     response = make_response(html)
     return response
 
@@ -40,7 +40,6 @@ def location():
     return resp
 
 
-
 # adds user entry into database
 @app.route('/addEntry', methods=['POST'])
 def addEntry():
@@ -50,18 +49,10 @@ def addEntry():
     description = request.form.get('description')
     location = request.form.get('location')
 
-
-
-
     # # get and process image file
-
-
-
     uploaded_file = request.files['file']
 
     filename = secure_filename(uploaded_file.filename)
-
-    
     print(filename)
     if filename != '':
         file_ext = os.path.splitext(filename)[1]
@@ -87,9 +78,7 @@ def addEntry():
     database.insertEntry(entry)
     database.disconnect()
 
-    html = render_template('index.html')
-    response = make_response(html)
-    return response
+    return redirect(url_for('index'))
 
 
 
