@@ -81,9 +81,112 @@
         // like latitude, longitude, description, image location, etc. maybe define a function app.js and call
         // it with data
 
-          var data= {{ entries |tojson }};
-          data = JSON.parse(data);
-          console.log(data);
+          let marker;
+
+          // function addMarker(location, ){
+
+          //     marker = new google.maps.Marker({
+          //         position: location,
+          //         map: map
+          //     });
+              
+
+          // }
+
+          var infowindow;
+
+          var map;
+
+
+          function addMarker(coordinates, info){
+              var marker = new google.maps.Marker({
+                position: coordinates,
+                map: map,
+              });
+
+              // var infowindow = new google.maps.InfoWindow({
+              //   content: info
+              // });
+              marker.addListener('click', function() {
+                infowindow.setContent(info);
+                infowindow.open(map, marker);
+                });
+
+            }
+
+
+
+          function stringBuilder(marker) {
+              var st = "<div class=\"informWindow\"><p>" + "Place Name: " + marker.placename + "</p>" + "<p>" + "Description: " + marker.description + "</p>" +
+              "<img src=" + marker.imagelocation + " alt=" + marker.placename + " width=\"300\" + height=\"250\">" +"</div>";
+              return st;
+          }
+
+
+          function populateMap(data) {
+
+              for (let i = 0; i < data.length; i++) {
+                  var marker = data[i];
+                  var coordinates = {lat: marker.latitude, lng: marker.longitude};
+                  var info = stringBuilder(marker);
+
+                  addMarker(coordinates, info);
+
+              }
+
+          }
+
+
+
+          function initMap(){
+
+              // Map Center
+              var options = {
+                zoom:12,
+                center:{lat:33.7743,lng:-117.9380}
+              }
+
+              map = new google.maps.Map(document.getElementById('map'),options);
+
+              // Search Autocomplete
+
+              const autocomplete = new google.maps.places.Autocomplete(document.getElementById('search_bar'));
+              autocomplete.addListener('place_changed', onPlaceChanged);
+
+
+              // idk if we need this -> optional argument in autocomplete object 
+
+              // const aOptions = {
+              //     bounds: defaultBounds,
+              //     componentRestrictions: { country: "us" },
+              //     fields: ["place_id", "geometry", "name"],
+              //     types: ["geocode"],
+              //   };
+
+              // add Marker = "{lat:___,lng:___}"
+
+
+              // Info Window
+              // const detail = new google.maps.InfoWindow({
+              //     content: '<h2>Yooooohoo</h2>'
+              // });
+
+              // marker.addListener("mouseover", () =>{
+              //     detail.open(map, marker);
+              // })
+
+              infowindow = new google.maps.InfoWindow();
+
+              var data= {{ entries |tojson }};
+              data = JSON.parse(data);
+              populateMap(data);
+
+
+
+
+          }
+
+
       </script>
 
 
@@ -95,13 +198,13 @@
         <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSfCU3uVlbkm5WDRXPEXwTjm9PUF2cgIw&libraries=places&callback=initMap"
         async>
-    </script> 
+      </script> 
 
        
 
       <!-- <script src="app.js"></script> -->
 
-      <script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
+      <!-- <script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script> -->
     </body>
 
 </html>
