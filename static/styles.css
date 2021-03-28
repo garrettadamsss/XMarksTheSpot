@@ -1,9 +1,9 @@
 #map {
   height: 50em;
   width: 100%;
-  margin-top: 20px;
-}
+  margin: 20px;
 
+}
 header {
   background-color: rgb(224, 224, 224);
   display: flex;
@@ -20,6 +20,9 @@ header {
   display: inline-block;
   padding: 0px 20px;
   margin-top: 10px;
+}
+.nav_links > li >a{
+  color: #000000;
 }
 
 .wrap {
@@ -68,8 +71,13 @@ input {
   display: none;
 }
 .button{
-  background:orange;
-  border:0;
+  background:darkcyan;
+  border: 1px solid; 
+  position: center; 
+  padding: 10px;
+  margin: 10px;
+  margin-top: 25px;
+  
 }
 
 .modal{
@@ -102,4 +110,19 @@ input {
   color:#000;
   text-decoration: none;
   cursor:pointer;
+}
+.text-wrapper{
+  height: 500px;
+  width: 40%;
+  margin: 20px;
+  align-content: center;
+}
+.headings{
+  color: darkcyan;
+  border-bottom: 1px solid;
+  margin: 10px; 
+}
+p {
+  padding: 10px;
+  position: center;
 }

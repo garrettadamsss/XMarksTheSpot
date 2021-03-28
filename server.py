@@ -19,6 +19,7 @@ app.config['UPLOAD_PATH'] = 'static/images'
 
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
+
 def index():    
 
     database = Database()
@@ -80,7 +81,11 @@ def addEntry():
 
     return redirect(url_for('index'))
 
-
+@app.route('/about')
+def about():
+    html = render_template('about.html')
+    resp = make_response(html)
+    return resp
 
 
 
@@ -90,5 +95,5 @@ if __name__ == '__main__':
     # if len(argv) != 2:
     #     print('Usage: ' + argv[0] + ' port')
     #     exit(1)
-    app.run()
+    app.run(debug=True)
 
