@@ -25,12 +25,17 @@ function initMap(){
     //     types: ["geocode"],
     //   };
 
-    // Marker
-    marker = new google.maps.Marker({
-        position: {lat:33.7743,lng:-117.9380},
-        map: map
-        // icon : "img"
-    });
+    // add Marker = "{lat:___,lng:___}"
+    function addMarker(location, ){
+
+        marker = new google.maps.Marker({
+            position: location,
+            map: map
+        });
+        
+
+    }
+
 
     // Info Window
     const detail = new google.maps.InfoWindow({
